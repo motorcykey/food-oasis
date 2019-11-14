@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from "./theme/materialUI";
 import Toast from "./components/Toast";
 import Header from "./components/Header";
 import Main from "./components/Main";
@@ -14,12 +16,14 @@ import Team from "./components/Team";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Footer from "./components/Footer";
+import ConfirmEmail from "./components/ConfirmEmail";
+import Faq from './components/Faq'
+import Organizations from './components/Organizations'
 
 
 const styles = {
   app: {
     color: "black",
-    backgroundColor: "#FAEBD7",
     margin: "0",
     display: "flex",
     flexDirection: "column",
@@ -50,8 +54,7 @@ function App() {
     }
   }, [user, setUser]);
 
-  const [toastOpen, setToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [toast, setToast] = useState({ message: "" });
 
   const onLogin = user => {
     if (user) {
@@ -94,28 +97,27 @@ function App() {
           <Route path="/team">
             <Team />
           </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path='/edit'>
+          <Route path="/faqs">
+              <Faq />
+            </Route>
+            <Route path="/organizations">
+              <Organizations />
+            </Route>
+            <Route path='/edit'>
             <StakeholderEdit />
           </Route>
-          <Route path="/login">
-            <Login
-              key={JSON.stringify(user)}
-              user={user}
-              setUser={onLogin}
-              setToastOpen={setToastOpen}
-              setToastMessage={setToastMessage}
-            />
+          <Route path="/register">
+          <Register setToast={setToast} />
           </Route>
+          <Route path="/confirm/:token">
+              <ConfirmEmail setToast={setToast} />
+            </Route>
+            <Route path="/login/:email?">
+              <Login user={user} setUser={onLogin} setToast={setToast} />
+            </Route>
         </Switch>
         <Footer />
-        <Toast
-          snackbarOpen={toastOpen}
-          setSnackbarOpen={setToastOpen}
-          snackbarMessage={toastMessage}
-        />
+        <Toast toast={toast} setToast={setToast} />
       </div>
     </Router>
   );
