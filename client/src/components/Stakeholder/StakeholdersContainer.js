@@ -1,7 +1,7 @@
 import React from "react";
 
-import * as stakeholderService from "../services/stakeholder-service";
-import * as categoryService from "../services/category-service";
+import * as stakeholderService from "../../services/stakeholder-service";
+import * as categoryService from "../../services/category-service";
 import { Typography } from "@material-ui/core";
 import StakeholderSearch from "./StakeholderSearch";
 import StakeholderCriteria from "./StakeholderCriteria";

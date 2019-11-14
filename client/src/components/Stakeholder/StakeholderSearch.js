@@ -14,7 +14,7 @@ import {
   FormLabel,
   Typography
 } from "@material-ui/core";
-import SearchButton from "./SearchButton";
+import SearchButton from "../SearchButton";
 
 const useStyles = makeStyles(theme => ({
   card: {

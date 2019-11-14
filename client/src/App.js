@@ -4,7 +4,8 @@ import Toast from "./components/Toast";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Map from "./components/Map";
-import StakeholdersContainer from "./components/StakeholdersContainer";
+import StakeholdersContainer from "./components/Stakeholder/StakeholdersContainer";
+import StakeholderEdit from './components/Stakeholder/StakeholderEdit'
 import Donate from "./components/Donate";
 import News from "./components/News";
 import Resources from "./components/Resources";
@@ -13,6 +14,7 @@ import Team from "./components/Team";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Footer from "./components/Footer";
+
 
 const styles = {
   app: {
@@ -94,6 +96,9 @@ function App() {
           </Route>
           <Route path="/register">
             <Register />
+          </Route>
+          <Route path='/edit'>
+            <StakeholderEdit />
           </Route>
           <Route path="/login">
             <Login
