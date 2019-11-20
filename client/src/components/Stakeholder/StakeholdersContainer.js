@@ -3,11 +3,11 @@ import React from "react";
 import * as stakeholderService from "../../services/stakeholder-service";
 import * as categoryService from "../../services/category-service";
 import { Typography } from "@material-ui/core";
-import StakeholderSearch from "./StakeholderSearch";
-import StakeholderCriteria from "./StakeholderCriteria";
-import StakeholderList from "./StakeholderList";
-import Map from "./Map";
-import { useStakeholders } from "../hooks/useStakeholders/useStakeholders";
+import StakeholderSearch from "../StakeholderSearch";
+import StakeholderCriteria from "../StakeholderCriteria";
+import StakeholderList from "../StakeholderList";
+import Map from "../Map";
+import { useStakeholders } from "../../hooks/useStakeholders/useStakeholders";
 
 const styles = {
   container: {

@@ -67,57 +67,60 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        <div style={styles.app}>
-          <Header user={user} setUser={onLogin} />
-          <Switch style={styles.mainContent}>
-            <Route exact path="/">
-              <StakeholdersContainer />
-            </Route>
-            <Route path="/home">
-              <Main />
-            </Route>
-            <Route path="/map">
-              <Map />
-            </Route>
-            <Route path="/stakeholders">
-              <StakeholdersContainer />
-            </Route>
-            <Route path="/donate">
-              <Donate />
-            </Route>
-            <Route path="/news">
-              <News />
-            </Route>
-            <Route path="/resources">
-              <Resources />
-            </Route>
-            <Route path="/about">
-              <About />
-            </Route>
-            <Route path="/team">
-              <Team />
-            </Route>
-            <Route path="/faqs">
+    <Router>
+      <div style={styles.app}>
+        <Header user={user} setUser={onLogin} />
+        <Switch style={styles.mainContent}>
+          <Route exact path="/">
+            <StakeholdersContainer />
+          </Route>
+          <Route path="/home">
+            <Main />
+          </Route>
+          <Route path="/map">
+            <Map />
+          </Route>
+          <Route path="/stakeholders">
+            <StakeholdersContainer />
+          </Route>
+          <Route path="/donate">
+            <Donate />
+          </Route>
+          <Route path="/news">
+            <News />
+          </Route>
+          <Route path="/resources">
+            <Resources />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/team">
+            <Team />
+          </Route>
+          <Route path="/faqs">
               <Faq />
             </Route>
             <Route path="/organizations">
               <Organizations />
             </Route>
-            <Route path="/register">
-              <Register setToast={setToast} />
-            </Route>
-            <Route path="/confirm/:token">
+            <Route path='/edit'>
+            <StakeholderEdit />
+          </Route>
+          <Route path="/register">
+          <Register setToast={setToast} />
+          </Route>
+          <Route path="/confirm/:token">
               <ConfirmEmail setToast={setToast} />
             </Route>
             <Route path="/login/:email?">
               <Login user={user} setUser={onLogin} setToast={setToast} />
             </Route>
-          </Switch>
-          <Footer />
-          <Toast toast={toast} setToast={setToast} />
-        </div>
-      </Router>
+        </Switch>
+        <Footer />
+        <Toast toast={toast} setToast={setToast} />
+      </div>
+    </Router>
     </ThemeProvider>
   );
 }
