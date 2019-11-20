@@ -42,7 +42,12 @@ const days = [
 ];
 
 const intervals = [
-    { label: 'Every', value:''}
+	{ label: 'Every', value:''},
+	{ label: 'First', value: '[1]'},
+	{ label: 'Second', value: '[2]'},
+	{ label: 'Third', value: '[4]'},
+	{ label: 'Fourth', value: '[1]'},
+	{ label: 'Last', value: '[-1]'}
 ]
 
 function OpenTimeInput(props) {
