@@ -13,8 +13,8 @@ import {
   Chip,
   FormLabel,
 } from "@material-ui/core";
-import SearchButton from "./SearchButton";
-import SwitchViewsButton from "./SwitchViewsButton";
+import SearchButton from "../SearchButton";
+import SwitchViewsButton from "../SwitchViewsButton";
 
 const useStyles = makeStyles(theme => ({
   card: {

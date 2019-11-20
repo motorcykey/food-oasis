@@ -6,7 +6,8 @@ import Toast from "./components/Toast";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Map from "./components/Map";
-import StakeholdersContainer from "./components/StakeholdersContainer";
+import StakeholdersContainer from "./components/Stakeholder/StakeholdersContainer";
+import StakeholderEdit from './components/Stakeholder/StakeholderEdit'
 import Donate from "./components/Donate";
 import News from "./components/News";
 import Resources from "./components/Resources";
@@ -18,6 +19,7 @@ import Footer from "./components/Footer";
 import ConfirmEmail from "./components/ConfirmEmail";
 import Faq from './components/Faq'
 import Organizations from './components/Organizations'
+
 
 const styles = {
   app: {

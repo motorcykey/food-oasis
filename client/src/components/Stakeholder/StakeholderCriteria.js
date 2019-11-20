@@ -2,8 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardContent, Grid } from "@material-ui/core";
 import { List, ListItem } from "@material-ui/core";
-import EditButton from "../components/EditButton";
-import SwitchViewsButton from "./SwitchViewsButton";
+import EditButton from "../EditButton";
+import SwitchViewsButton from "../SwitchViewsButton";
 
 const useStyles = makeStyles(theme => ({
   card: {
