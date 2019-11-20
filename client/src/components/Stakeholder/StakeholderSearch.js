@@ -14,7 +14,7 @@ import {
   FormLabel,
 } from "@material-ui/core";
 import SearchButton from "../SearchButton";
-import SwitchViewsButton from "./SwitchViewsButton";
+import SwitchViewsButton from "../SwitchViewsButton";
 
 const useStyles = makeStyles(theme => ({
   card: {

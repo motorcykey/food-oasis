@@ -9,13 +9,13 @@ import Button from '@material-ui/core/Button';
 // })
 
 function OpenTimeForm(props) {
-	const [ inputs, setInputs ] = useState([ { days: '', openTime: '', closeTime: '' } ]);
+	const [ inputs, setInputs ] = useState([ {interval: [], days: [], openTime: '', closeTime: '' } ]);
 
 	useEffect(
 		() => {
 			let hoursString = '';
 			for (let i = 0; i < inputs.length; i++) {
-				const { days, openTime, closeTime } = inputs[i];
+				const { interval, days, openTime, closeTime } = inputs[i];
 				hoursString += days + openTime + closeTime;
 			}
 			props.setOpenTimes(hoursString);
@@ -25,7 +25,7 @@ function OpenTimeForm(props) {
 	);
 
 	const addInput = () => {
-		let newList = [ ...inputs, { days: '', openTime: '', closeTime: '' } ];
+		let newList = [ ...inputs, {interval: [], days: [], openTime: '', closeTime: '' } ];
 		setInputs(newList);
 	};
 
