@@ -1,47 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { ThemeProvider } from "@material-ui/core/styles";
-import theme from "./theme/materialUI";
-import { UserContext } from "./components/user-context";
-import Toast from "./components/Toast";
-import Header from "./components/Header";
-import Main from "./components/Main";
-import Map from "./components/Map";
-import StakeholdersContainer from "./components/StakeholdersContainer";
-import StakeholderEdit from "./components/StakeholderEdit";
-import Donate from "./components/Donate";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './theme/materialUI';
+import { UserContext } from './components/user-context';
+import Toast from './components/Toast';
+import Header from './components/Header';
+import Main from './components/Main';
+import Map from './components/Map';
+import StakeholdersContainer from './components/StakeholdersContainer';
+import StakeholderEdit from './components/StakeholderEdit';
+import Donate from './components/Donate';
 // import News from "./components/News";
-import Resources from "./components/Resources";
-import About from "./components/About";
+import Resources from './components/Resources';
+import About from './components/About';
 // import Team from "./components/Team";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import ForgotPassword from "./components/ForgotPassword";
-import ResetPassword from "./components/ResetPassword";
-import Footer from "./components/Footer";
-import ConfirmEmail from "./components/ConfirmEmail";
-import Faq from "./components/Faq";
-import FaqEdit from "./components/FaqEdit";
-import FaqAdd from "./components/FaqAdd";
+import Register from './components/Register';
+import Login from './components/Login';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
+import Footer from './components/Footer';
+import ConfirmEmail from './components/ConfirmEmail';
+import Faq from './components/Faq';
+import FaqEdit from './components/FaqEdit';
+import FaqAdd from './components/FaqAdd';
 // import Organizations from "./components/Organizations";
+import Home from './containers/Home';
 
 const styles = {
   app: {
-    color: "black",
-    margin: "0",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "stretch",
-    height: "100%"
+    color: 'black',
+    margin: '0',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    height: '100%',
   },
   mainContent: {
-    margin: "0",
-    paddingBottom: "50px",
-    backgroundColor: "green",
-    overflowY: "scroll",
-    flexGrow: 1
-  }
+    margin: '0',
+    paddingBottom: '50px',
+    backgroundColor: 'green',
+    overflowY: 'scroll',
+    flexGrow: 1,
+  },
 };
 
 function App() {
@@ -49,7 +50,7 @@ function App() {
   const [userCoordinates, setUserCoordinates] = useState({});
 
   useEffect(() => {
-    const storedJson = localStorage.getItem("user");
+    const storedJson = localStorage.getItem('user');
     const userJson = JSON.stringify(user);
     if (!userJson && !storedJson) {
       return;
@@ -60,13 +61,13 @@ function App() {
     }
   }, [user, setUser]);
 
-  const [toast, setToast] = useState({ message: "" });
+  const [toast, setToast] = useState({ message: '' });
 
-  const onLogin = user => {
+  const onLogin = (user) => {
     if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(user));
     } else {
-      localStorage.removeItem("user");
+      localStorage.removeItem('user');
     }
     setUser(user);
   };
@@ -75,18 +76,18 @@ function App() {
     let userCoordinates = { latitude: null, longitude: null };
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        position => {
+        (position) => {
           if (position) {
             const userCoordinates = {
               latitude: position.coords.latitude,
-              longitude: position.coords.longitude
+              longitude: position.coords.longitude,
             };
             setUserCoordinates(userCoordinates);
           }
         },
-        error => {
+        (error) => {
           console.log(`Getting browser location failed: ${error.message}`);
-        }
+        },
       );
     } else {
       // If browser location permission is denied, the request is
@@ -111,7 +112,7 @@ function App() {
                 <StakeholdersContainer />
               </Route>
               <Route path="/home">
-                <Main />
+                <Home />
               </Route>
               <Route path="/map">
                 <Map />
