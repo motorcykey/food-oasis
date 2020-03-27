@@ -23,13 +23,13 @@ export default function Menu(props) {
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const MENU_ITEMS = [
-    "Stakeholders",
-    "Donate",
-    "FAQs",
+    "Stakeholders"
+    //"Donate",
+    //"FAQs",
     // "News",
-    "Resources",
+    //"Resources",
     // "Organizations",
-    "About"
+    //"About"
     // "Team"
   ];
 
@@ -57,7 +57,7 @@ export default function Menu(props) {
 
           return <MenuItemLink key={index} to={`/${route}`} text={text} />;
         })}
-        {props.user ? null : (
+        {/* {props.user ? null : (
           <>
             <MenuItemLink
               key="Register"
@@ -74,7 +74,7 @@ export default function Menu(props) {
               Login
             </MenuItemLink>
           </>
-        )}
+        )} */}
         <UserContext.Consumer>
           {user =>
             user && user.isAdmin ? (
@@ -87,7 +87,7 @@ export default function Menu(props) {
           }
         </UserContext.Consumer>
       </List>
-      <LanguageChooser />
+      {/* <LanguageChooser /> */}
     </div>
   );
 

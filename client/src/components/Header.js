@@ -41,7 +41,7 @@ export default function Header(props) {
               <Typography variant="h6" component="h1" style={styles.username}>
                 {props.user.firstName}
               </Typography>
-              <Logout user={props.user} setUser={props.setUser} />
+              {/* <Logout user={props.user} setUser={props.setUser} /> */}
             </div>
           ) : (
             <p>
