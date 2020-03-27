@@ -34,32 +34,38 @@ const styles = {
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "stretch",
-    height: "100%",
+    height: "100%"
   },
   mainContent: {
     margin: "0",
     paddingBottom: "50px",
     backgroundColor: "green",
     overflowY: "scroll",
-    flexGrow: 1,
-  },
+    flexGrow: 1
+  }
 };
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    id: 106,
+    firstName: "Webinar",
+    lastName: "User",
+    email: "webinaruser@dispostable.com",
+    isAdmin: true
+  });
   const [userCoordinates, setUserCoordinates] = useState({});
 
-  useEffect(() => {
-    const storedJson = localStorage.getItem("user");
-    const userJson = JSON.stringify(user);
-    if (!userJson && !storedJson) {
-      return;
-    } else if (userJson === storedJson) {
-      return;
-    } else {
-      setUser(JSON.parse(storedJson));
-    }
-  }, [user, setUser]);
+  // useEffect(() => {
+  //   const storedJson = localStorage.getItem("user");
+  //   const userJson = JSON.stringify(user);
+  //   if (!userJson && !storedJson) {
+  //     return;
+  //   } else if (userJson === storedJson) {
+  //     return;
+  //   } else {
+  //     setUser(JSON.parse(storedJson));
+  //   }
+  // }, [user, setUser]);
 
   const [toast, setToast] = useState({ message: "" });
 
@@ -80,14 +86,14 @@ function App() {
           if (position) {
             const userCoordinates = {
               latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
+              longitude: position.coords.longitude
             };
             setUserCoordinates(userCoordinates);
           }
         },
         error => {
           console.log(`Getting browser location failed: ${error.message}`);
-        },
+        }
       );
     } else {
       // If browser location permission is denied, the request is
