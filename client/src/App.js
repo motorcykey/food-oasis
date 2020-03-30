@@ -115,7 +115,7 @@ function App() {
             <Header user={user} setUser={onLogin} />
             <Switch style={styles.mainContent}>
               <Route exact path="/">
-                <StakeholdersContainer />
+                <Main />
               </Route>
               <Route path="/home">
                 <Main />
@@ -129,7 +129,7 @@ function App() {
               <Route path="/map">
                 <Map />
               </Route>
-              <Route path="/stakeholders">
+              <Route path="/h3110">
                 <StakeholdersContainer userCoordinates={userCoordinates} />
               </Route>
               <Route path="/stakeholderedit/:id?">

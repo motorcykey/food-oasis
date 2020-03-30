@@ -45,7 +45,7 @@ export function useStakeholders(history) {
         }
       });
       history.push(
-        `/stakeholders?name=${searchString}` +
+        `/h3110?name=${searchString}` +
           `&radius=${selectedDistance}` +
           `&lat=${latitude}` +
           `&lon=${longitude}` +

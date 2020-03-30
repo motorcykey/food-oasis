@@ -23,7 +23,7 @@ export default function Menu(props) {
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const MENU_ITEMS = [
-    "Stakeholders"
+    //"Stakeholders"
     //"Donate",
     //"FAQs",
     // "News",
@@ -52,11 +52,12 @@ export default function Menu(props) {
       onKeyDown={e => toggleDrawer(e)}
     >
       <List>
-        {MENU_ITEMS.map((text, index) => {
-          const route = text.toLowerCase();
+        {MENU_ITEMS.length > 0 &&
+          MENU_ITEMS.map((text, index) => {
+            const route = text.toLowerCase();
 
-          return <MenuItemLink key={index} to={`/${route}`} text={text} />;
-        })}
+            return <MenuItemLink key={index} to={`/${route}`} text={text} />;
+          })}
         {/* {props.user ? null : (
           <>
             <MenuItemLink
