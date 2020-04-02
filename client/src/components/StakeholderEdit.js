@@ -153,9 +153,9 @@ const StakeholderEdit = props => {
     props.history.push("/home");
   };
 
-  const verify = setVerify => {
-    stakeholderService.verify(editId, setVerify, user.id);
-  };
+  // const verify = setVerify => {
+  //   stakeholderService.verify(editId, setVerify, user.id);
+  // };
 
   function formatMapAddress(formData) {
     return `${formData.address1 || ""} ${formData.address2 ||
