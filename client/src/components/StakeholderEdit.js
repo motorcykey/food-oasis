@@ -71,46 +71,52 @@ const validationSchema = Yup.object().shape({
   )
 });
 
+const emptyStakeholder = {
+  id: 0,
+  name: "",
+  description: "",
+  parentOrganization: "",
+  address1: "",
+  address2: "",
+  city: "",
+  state: "",
+  zip: "",
+  phone: "",
+  email: "",
+  latitude: "",
+  longitude: "",
+  physicalAccess: "",
+  items: "",
+  services: "",
+  facebook: "",
+  twitter: "",
+  pinterest: "",
+  linkedin: "",
+  inactive: false,
+  website: "",
+  notes: "",
+  requirements: "",
+  adminNotes: "",
+  createdDate: "",
+  createdUser: "",
+  modifiedDate: "",
+  modifiedUser: "",
+  verifiedDate: "",
+  verifiedUser: "",
+  selectedCategoryIds: [],
+  hours: []
+};
+
 const StakeholderEdit = props => {
   const { classes, setToast, match, user } = props;
   const editId = match.params.id;
   const [categories, setCategories] = useState([]);
   const [geocodeResults, setGeocodeResults] = useState([]);
-  const [originalData, setOriginalData] = useState({
-    id: 0,
-    name: "",
-    description: "",
-    parentOrganization: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    zip: "",
-    phone: "",
-    email: "",
-    latitude: "",
-    longitude: "",
-    physicalAccess: "",
-    items: "",
-    services: "",
-    facebook: "",
-    twitter: "",
-    pinterest: "",
-    linkedin: "",
-    inactive: false,
-    website: "",
-    notes: "",
-    requirements: "",
-    adminNotes: "",
-    createdDate: "",
-    createdUser: "",
-    modifiedDate: "",
-    modifiedUser: "",
-    verifiedDate: "",
-    verifiedUser: "",
-    selectedCategoryIds: [],
-    hours: []
-  });
+  const [originalData, setOriginalData] = useState(emptyStakeholder);
+
+  useEffect(() => {
+    console.log("StakeholderEdit component loading...");
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -132,6 +138,8 @@ const StakeholderEdit = props => {
           delete stakeholder.categories;
 
           setOriginalData(stakeholder);
+        } else {
+          setOriginalData(emptyStakeholder);
         }
       } catch (err) {
         console.log(err);
