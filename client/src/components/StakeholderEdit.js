@@ -14,11 +14,14 @@ import {
   Grid,
   Input,
   InputLabel,
+  ListItem,
   ListItemText,
   MenuItem,
   Select,
   TextField,
-  Typography
+  Tooltip,
+  Typography,
+  List
 } from "@material-ui/core";
 import * as stakeholderService from "../services/stakeholder-service";
 import * as categoryService from "../services/category-service";
@@ -36,8 +39,17 @@ const styles = theme => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120
+  },
+  tooltip: {
+    backgroundColor: "#0000FF"
   }
 });
+
+const BigTooltip = withStyles(theme => ({
+  tooltip: {
+    fontSize: 16
+  }
+}))(Tooltip);
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -168,6 +180,49 @@ const StakeholderEdit = props => {
     setGeocodeResults(result);
   };
 
+  const noteTooltip = (
+    <div>
+      <Typography>{`IF YOU GET THROUGH TO THEM:`}</Typography>
+      <List dense={true}>
+        <ListItem>
+          <ListItemText
+            primary={`COVID Updates: (i.e., different hours, fewer days, low on staff)`}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemText
+            primary={`FOLA liason name, number, and email: (someone from your org who responds to requests for future updates)`}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemText
+            primary={`Perishable or nonperishable food (or both)`}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary={`Prepared food (Y/N)`} />
+        </ListItem>
+        <ListItem>
+          <ListItemText
+            primary={`Distribute food to the public or to other food pantries`}
+          />
+        </ListItem>
+      </List>
+      <Typography>{`IF YOU DON'T GET THROUGH TO THEM: (choose one)`}</Typography>
+      <List dense={true}>
+        <ListItem>
+          <ListItemText primary={`1. The phone was inactive`} />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary={`2. Weren't available but call back`} />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary={`3. Put any info that was in a voicemail`} />
+        </ListItem>
+      </List>
+    </div>
+  );
+
   return (
     <Container component="main" maxWidth="lg">
       <CssBaseline />
@@ -246,7 +301,10 @@ const StakeholderEdit = props => {
 
                 <Grid item xs={12}>
                   <FormControl className={classes.formControl}>
-                    <InputLabel id="selectCategoryIds-label">
+                    <InputLabel
+                      style={{ color: "red" }}
+                      id="selectCategoryIds-label"
+                    >
                       Categories
                     </InputLabel>
 
@@ -303,42 +361,46 @@ const StakeholderEdit = props => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        margin="normal"
-                        name="inactive"
-                        label="Inactive"
-                        value={values.inactive}
-                        checked={values.inactive}
-                        onChange={() =>
-                          setFieldValue("inactive", !values.inactive)
-                        }
-                        onBlur={handleBlur}
-                      />
-                    }
-                    label="Inactive"
-                  />
+                  <BigTooltip title="The organization is not operating">
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          margin="normal"
+                          name="inactive"
+                          label="Inactive"
+                          value={values.inactive}
+                          checked={values.inactive}
+                          onChange={() =>
+                            setFieldValue("inactive", !values.inactive)
+                          }
+                          onBlur={handleBlur}
+                        />
+                      }
+                      label="Inactive"
+                    />
+                  </BigTooltip>
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TextField
-                    type="text"
-                    label="Description"
-                    placeholder="Dedicated to helping veterans since 1993."
-                    name="description"
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    multiline
-                    rows={2}
-                    rowsMax={12}
-                    value={values.description}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.description ? errors.description : ""}
-                    error={touched.description && Boolean(errors.description)}
-                  />
+                  <BigTooltip title="Leave Blank">
+                    <TextField
+                      type="text"
+                      label="Description"
+                      placeholder="Leave blank"
+                      name="description"
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      multiline
+                      rows={2}
+                      rowsMax={12}
+                      value={values.description}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={touched.description ? errors.description : ""}
+                      error={touched.description && Boolean(errors.description)}
+                    />
+                  </BigTooltip>
                 </Grid>
 
                 <Grid item xs={12}>
@@ -638,93 +700,105 @@ const StakeholderEdit = props => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="items"
-                    label="Items (separated by commas)"
-                    placeholder="Meat, Canned Goods, Produce, Personal Hygiene"
-                    type="text"
-                    value={values.items}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.items ? errors.items : ""}
-                    error={touched.items && Boolean(errors.items)}
-                  />
+                  <BigTooltip title="(Items besides food, i.e. dog food, cat food, hygiene products, diapers, female hygiene products)">
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      name="items"
+                      label="Items (separated by commas)"
+                      type="text"
+                      value={values.items}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={touched.items ? errors.items : ""}
+                      error={touched.items && Boolean(errors.items)}
+                    />
+                  </BigTooltip>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="services"
-                    label="Services (separated by commas)"
-                    placeholder="Meals, Barber, Spiritual Counseling"
-                    type="text"
-                    value={values.services}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.services ? errors.services : ""}
-                    error={touched.services && Boolean(errors.services)}
-                  />
+                  <BigTooltip title="(Besides feeding ppl, i.e., family counseling, career counseling, drop in for women or homeless, etc.)">
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      name="services"
+                      label="Services (separated by commas)"
+                      type="text"
+                      value={values.services}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={touched.services ? errors.services : ""}
+                      error={touched.services && Boolean(errors.services)}
+                    />
+                  </BigTooltip>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="notes"
-                    label="Notes"
-                    placeholder="Enter through double doors on Main St. Open until food runs out."
-                    type="text"
-                    multiline
-                    rows={2}
-                    rowsMax={12}
-                    value={values.notes}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.notes ? errors.notes : ""}
-                    error={touched.notes && Boolean(errors.notes)}
-                  />
+                  <BigTooltip title={noteTooltip}>
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      name="notes"
+                      label="Notes"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      type="text"
+                      multiline
+                      rows={2}
+                      rowsMax={12}
+                      value={values.notes}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={touched.notes ? errors.notes : ""}
+                      error={touched.notes && Boolean(errors.notes)}
+                    />
+                  </BigTooltip>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="requirements"
-                    label="Eligibility / Requirements"
-                    placeholder="Must provide identification and proof of income < 25k / yr"
-                    type="text"
-                    multiline
-                    rows={2}
-                    rowsMax={12}
-                    value={values.requirements}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.requirements ? errors.requirements : ""}
-                    error={touched.requirements && Boolean(errors.requirements)}
-                  />
+                  <BigTooltip title="(In addition, must go to chapel service, must be < 18, must show citizenship, etc.)">
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      name="requirements"
+                      label="Eligibility / Requirements"
+                      type="text"
+                      multiline
+                      rows={2}
+                      rowsMax={12}
+                      value={values.requirements}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={
+                        touched.requirements ? errors.requirements : ""
+                      }
+                      error={
+                        touched.requirements && Boolean(errors.requirements)
+                      }
+                    />
+                  </BigTooltip>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="adminNotes"
-                    label="Administrator Notes"
-                    placeholder="Administrator Contact: Mary Rodriguez 310 555-1212"
-                    type="text"
-                    multiline
-                    rows={2}
-                    rowsMax={12}
-                    value={values.adminNotes}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.adminNotes ? errors.adminNotes : ""}
-                    error={touched.adminNotes && Boolean(errors.adminNotes)}
-                  />
+                  <BigTooltip title="Leave blank">
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      name="adminNotes"
+                      label="Administrator Notes"
+                      type="text"
+                      multiline
+                      rows={2}
+                      rowsMax={12}
+                      value={values.adminNotes}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={touched.adminNotes ? errors.adminNotes : ""}
+                      error={touched.adminNotes && Boolean(errors.adminNotes)}
+                    />
+                  </BigTooltip>
                 </Grid>
 
                 <Grid
