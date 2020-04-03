@@ -173,7 +173,7 @@ const StakeholderEdit = props => {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Stakeholder Information
+          Organization Information
         </Typography>
         <Formik
           initialValues={originalData}
@@ -243,10 +243,89 @@ const StakeholderEdit = props => {
                     error={touched.name && Boolean(errors.name)}
                   />
                 </Grid>
+
+                <Grid item xs={12}>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel id="selectCategoryIds-label">
+                      Categories
+                    </InputLabel>
+
+                    <Select
+                      labelId="selectCategoryIds-label"
+                      id="selectedCategoryIds"
+                      variant="outlined"
+                      name="selectedCategoryIds"
+                      multiple
+                      fullWidth
+                      value={values.selectedCategoryIds}
+                      onChange={handleChange}
+                      input={<Input />}
+                      renderValue={selectedCategoryIds => {
+                        if (!categories) {
+                          return "Loading categories...";
+                        }
+                        if (selectedCategoryIds.length === 0) {
+                          return "(Select Categories)";
+                        }
+                        return selectedCategoryIds
+                          .map(
+                            categoryId =>
+                              categories.filter(
+                                category => category.id === categoryId
+                              )[0].name
+                          )
+                          .join(", ");
+                      }}
+                      MenuProps={MenuProps}
+                    >
+                      {categories.map(category => (
+                        <MenuItem
+                          key={category.id}
+                          value={category.id}
+                          // style={getStyles(name, personName, theme)}
+                        >
+                          <Checkbox
+                            checked={
+                              values.selectedCategoryIds.indexOf(category.id) >
+                              -1
+                            }
+                          />
+                          <ListItemText primary={category.name} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText>
+                      {touched.selectedCategoryIds
+                        ? errors.selectedCategoryIds
+                        : ""}
+                    </FormHelperText>
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        margin="normal"
+                        name="inactive"
+                        label="Inactive"
+                        value={values.inactive}
+                        checked={values.inactive}
+                        onChange={() =>
+                          setFieldValue("inactive", !values.inactive)
+                        }
+                        onBlur={handleBlur}
+                      />
+                    }
+                    label="Inactive"
+                  />
+                </Grid>
+
                 <Grid item xs={12}>
                   <TextField
                     type="text"
                     label="Description"
+                    placeholder="Dedicated to helping veterans since 1993."
                     name="description"
                     variant="outlined"
                     margin="normal"
@@ -482,88 +561,6 @@ const StakeholderEdit = props => {
                     error={touched.email && Boolean(errors.email)}
                   />
                 </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="website"
-                    label="Web Site"
-                    type="text"
-                    value={values.website}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.website ? errors.website : ""}
-                    error={touched.website && Boolean(errors.website)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="items"
-                    label="Items (separated by commas)"
-                    type="text"
-                    value={values.items}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.items ? errors.items : ""}
-                    error={touched.items && Boolean(errors.items)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="services"
-                    label="Services (separated by commas)"
-                    type="text"
-                    value={values.services}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.services ? errors.services : ""}
-                    error={touched.services && Boolean(errors.services)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="notes"
-                    label="Notes"
-                    type="text"
-                    multiline
-                    rows={2}
-                    rowsMax={12}
-                    value={values.notes}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.notes ? errors.notes : ""}
-                    error={touched.notes && Boolean(errors.notes)}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    fullWidth
-                    name="requirements"
-                    label="Eligibility / Requirements"
-                    type="text"
-                    multiline
-                    rows={2}
-                    rowsMax={12}
-                    value={values.requirements}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    helperText={touched.requirements ? errors.requirements : ""}
-                    error={touched.requirements && Boolean(errors.requirements)}
-                  />
-                </Grid>
                 <Grid item sm={6} xs={12}>
                   <TextField
                     variant="outlined"
@@ -624,6 +621,92 @@ const StakeholderEdit = props => {
                     error={touched.linkedin && Boolean(errors.linkedin)}
                   />
                 </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="website"
+                    label="Web Site"
+                    type="text"
+                    value={values.website}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.website ? errors.website : ""}
+                    error={touched.website && Boolean(errors.website)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="items"
+                    label="Items (separated by commas)"
+                    placeholder="Meat, Canned Goods, Produce, Personal Hygiene"
+                    type="text"
+                    value={values.items}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.items ? errors.items : ""}
+                    error={touched.items && Boolean(errors.items)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="services"
+                    label="Services (separated by commas)"
+                    placeholder="Meals, Barber, Spiritual Counseling"
+                    type="text"
+                    value={values.services}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.services ? errors.services : ""}
+                    error={touched.services && Boolean(errors.services)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="notes"
+                    label="Notes"
+                    placeholder="Enter through double doors on Main St. Open until food runs out."
+                    type="text"
+                    multiline
+                    rows={2}
+                    rowsMax={12}
+                    value={values.notes}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.notes ? errors.notes : ""}
+                    error={touched.notes && Boolean(errors.notes)}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="requirements"
+                    label="Eligibility / Requirements"
+                    placeholder="Must provide identification and proof of income < 25k / yr"
+                    type="text"
+                    multiline
+                    rows={2}
+                    rowsMax={12}
+                    value={values.requirements}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    helperText={touched.requirements ? errors.requirements : ""}
+                    error={touched.requirements && Boolean(errors.requirements)}
+                  />
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     variant="outlined"
@@ -631,6 +714,7 @@ const StakeholderEdit = props => {
                     fullWidth
                     name="adminNotes"
                     label="Administrator Notes"
+                    placeholder="Administrator Contact: Mary Rodriguez 310 555-1212"
                     type="text"
                     multiline
                     rows={2}
@@ -642,81 +726,7 @@ const StakeholderEdit = props => {
                     error={touched.adminNotes && Boolean(errors.adminNotes)}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        margin="normal"
-                        name="inactive"
-                        label="Inactive"
-                        value={values.inactive}
-                        checked={values.inactive}
-                        onChange={() =>
-                          setFieldValue("inactive", !values.inactive)
-                        }
-                        onBlur={handleBlur}
-                      />
-                    }
-                    label="Inactive"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel id="selectCategoryIds-label">
-                      Categories
-                    </InputLabel>
 
-                    <Select
-                      labelId="selectCategoryIds-label"
-                      id="selectedCategoryIds"
-                      variant="outlined"
-                      name="selectedCategoryIds"
-                      multiple
-                      fullWidth
-                      value={values.selectedCategoryIds}
-                      onChange={handleChange}
-                      input={<Input />}
-                      renderValue={selectedCategoryIds => {
-                        if (!categories) {
-                          return "Loading categories...";
-                        }
-                        if (selectedCategoryIds.length === 0) {
-                          return "(Select Categories)";
-                        }
-                        return selectedCategoryIds
-                          .map(
-                            categoryId =>
-                              categories.filter(
-                                category => category.id === categoryId
-                              )[0].name
-                          )
-                          .join(", ");
-                      }}
-                      MenuProps={MenuProps}
-                    >
-                      {categories.map(category => (
-                        <MenuItem
-                          key={category.id}
-                          value={category.id}
-                          // style={getStyles(name, personName, theme)}
-                        >
-                          <Checkbox
-                            checked={
-                              values.selectedCategoryIds.indexOf(category.id) >
-                              -1
-                            }
-                          />
-                          <ListItemText primary={category.name} />
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    <FormHelperText>
-                      {touched.selectedCategoryIds
-                        ? errors.selectedCategoryIds
-                        : ""}
-                    </FormHelperText>
-                  </FormControl>
-                </Grid>
                 <Grid
                   item
                   xs={12}
