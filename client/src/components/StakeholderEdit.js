@@ -68,6 +68,7 @@ const validationSchema = Yup.object().shape({
   city: Yup.string().required("City is required"),
   state: Yup.string().required("State is required"),
   zip: Yup.string().required("Zip code is required"),
+  phone: Yup.string().required("Phone is required"),
   latitude: Yup.number()
     .required("Latitude is required")
     .min(-90)
