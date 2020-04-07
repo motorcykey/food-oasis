@@ -121,7 +121,7 @@ const emptyStakeholder = {
 };
 
 const StakeholderEdit = props => {
-  const { classes, setToast, match, user } = props;
+  const { classes, setToast, match, user, history } = props;
   const editId = match.params.id;
   const [categories, setCategories] = useState([]);
   const [geocodeResults, setGeocodeResults] = useState([]);
@@ -243,6 +243,7 @@ const StakeholderEdit = props => {
                   setToast({
                     message: "Update successful."
                   });
+                  history.push("/");
                 })
                 .catch(err => {
                   setToast({
@@ -259,7 +260,7 @@ const StakeholderEdit = props => {
                     message: "Insert successful."
                   });
                   setFieldValue("id", response.id);
-                  //   history.push("/stakeholders");
+                  history.push("/");
                 })
                 .catch(err => {
                   setToast({
@@ -825,7 +826,7 @@ const StakeholderEdit = props => {
                     label={values.verifiedDate ? "Unverify" : "Verify"}
                   /> */}
                   <div>
-                    <CloseButton type="button" onClick={cancel} />
+                    {/* <CloseButton type="button" onClick={cancel} /> */}
                     <SaveButton
                       type="submit"
                       className={classes.submit}
