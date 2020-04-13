@@ -21,7 +21,7 @@ import {
   TextField,
   Tooltip,
   Typography,
-  List
+  List,
 } from "@material-ui/core";
 import * as stakeholderService from "../services/stakeholder-service";
 import * as categoryService from "../services/category-service";
@@ -31,24 +31,24 @@ import { SaveButton, CloseButton, SearchButton, VerifyButton } from "./Buttons";
 
 import moment from "moment";
 
-const styles = theme => ({
+const styles = (theme) => ({
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120
+    minWidth: 120,
   },
   tooltip: {
-    backgroundColor: "#0000FF"
-  }
+    backgroundColor: "#0000FF",
+  },
 });
 
-const BigTooltip = withStyles(theme => ({
+const BigTooltip = withStyles((theme) => ({
   tooltip: {
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 }))(Tooltip);
 
 const ITEM_HEIGHT = 48;
@@ -57,9 +57,9 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250
-    }
-  }
+      width: 250,
+    },
+  },
 };
 
 const validationSchema = Yup.object().shape({
@@ -69,19 +69,13 @@ const validationSchema = Yup.object().shape({
   state: Yup.string().required("State is required"),
   zip: Yup.string().required("Zip code is required"),
   phone: Yup.string().required("Phone is required"),
-  latitude: Yup.number()
-    .required("Latitude is required")
-    .min(-90)
-    .max(90),
-  longitude: Yup.number()
-    .required("Longitude is required")
-    .min(-180)
-    .max(180),
+  latitude: Yup.number().required("Latitude is required").min(-90).max(90),
+  longitude: Yup.number().required("Longitude is required").min(-180).max(180),
   email: Yup.string().email("Invalid email address format"),
   selectedCategoryIds: Yup.array().min(
     1,
     "You must select at least one category"
-  )
+  ),
 });
 
 const emptyStakeholder = {
@@ -117,10 +111,10 @@ const emptyStakeholder = {
   verifiedDate: "",
   verifiedUser: "",
   selectedCategoryIds: [],
-  hours: []
+  hours: [],
 };
 
-const StakeholderEdit = props => {
+const StakeholderEdit = (props) => {
   const { classes, setToast, match, user, history } = props;
   const editId = match.params.id;
   const [categories, setCategories] = useState([]);
@@ -136,7 +130,7 @@ const StakeholderEdit = props => {
       try {
         const categories = await categoryService.getAll();
         const activeCategories = categories.filter(
-          category => !category.inactive
+          (category) => !category.inactive
         );
         setCategories(activeCategories);
 
@@ -146,7 +140,7 @@ const StakeholderEdit = props => {
           // stakeholder.categories array of objects to an array of
           // categoryIds as stakeholder.categoryIds
           stakeholder.selectedCategoryIds = stakeholder.categories.map(
-            category => category.id
+            (category) => category.id
           );
           delete stakeholder.categories;
 
@@ -166,17 +160,17 @@ const StakeholderEdit = props => {
     props.history.push("/home");
   };
 
-  // const verify = setVerify => {
-  //   stakeholderService.verify(editId, setVerify, user.id);
-  // };
+  const verify = (setVerify) => {
+    stakeholderService.verify(editId, setVerify, user.id);
+  };
 
   function formatMapAddress(formData) {
-    return `${formData.address1 || ""} ${formData.address2 ||
-      ""} ${formData.city || ""}, ${formData.state || ""} ${formData.zip ||
-      ""}`;
+    return `${formData.address1 || ""} ${formData.address2 || ""} ${
+      formData.city || ""
+    }, ${formData.state || ""} ${formData.zip || ""}`;
   }
 
-  const geocode = async formData => {
+  const geocode = async (formData) => {
     const result = await esriService.geocode(formatMapAddress(formData));
     setGeocodeResults(result);
   };
@@ -239,15 +233,15 @@ const StakeholderEdit = props => {
             if (values.id) {
               return stakeholderService
                 .put({ ...values, loginId: user.id })
-                .then(response => {
+                .then((response) => {
                   setToast({
-                    message: "Update successful."
+                    message: "Update successful.",
                   });
                   history.push("/");
                 })
-                .catch(err => {
+                .catch((err) => {
                   setToast({
-                    message: "Update failed."
+                    message: "Update failed.",
                   });
                   console.log(err);
                   setSubmitting(false);
@@ -255,16 +249,16 @@ const StakeholderEdit = props => {
             } else {
               return stakeholderService
                 .post({ ...values, loginId: user.id })
-                .then(response => {
+                .then((response) => {
                   setToast({
-                    message: "Insert successful."
+                    message: "Insert successful.",
                   });
                   setFieldValue("id", response.id);
                   history.push("/");
                 })
-                .catch(err => {
+                .catch((err) => {
                   setToast({
-                    message: "Insert failed."
+                    message: "Insert failed.",
                   });
                   console.log(err);
                   setSubmitting(false);
@@ -280,7 +274,7 @@ const StakeholderEdit = props => {
             handleBlur,
             handleSubmit,
             isSubmitting,
-            setFieldValue
+            setFieldValue,
           }) => (
             <form className={classes.form} noValidate onSubmit={handleSubmit}>
               <Grid container spacing={1}>
@@ -320,7 +314,7 @@ const StakeholderEdit = props => {
                       value={values.selectedCategoryIds}
                       onChange={handleChange}
                       input={<Input />}
-                      renderValue={selectedCategoryIds => {
+                      renderValue={(selectedCategoryIds) => {
                         if (!categories) {
                           return "Loading categories...";
                         }
@@ -329,16 +323,16 @@ const StakeholderEdit = props => {
                         }
                         return selectedCategoryIds
                           .map(
-                            categoryId =>
+                            (categoryId) =>
                               categories.filter(
-                                category => category.id === categoryId
+                                (category) => category.id === categoryId
                               )[0].name
                           )
                           .join(", ");
                       }}
                       MenuProps={MenuProps}
                     >
-                      {categories.map(category => (
+                      {categories.map((category) => (
                         <MenuItem
                           key={category.id}
                           value={category.id}
@@ -560,7 +554,7 @@ const StakeholderEdit = props => {
                             border: "1px solid black",
                             backgroundColor: "#EEE",
                             margin: "0.1em",
-                            padding: "0.5em"
+                            padding: "0.5em",
                           }}
                           key={index}
                         >
@@ -736,29 +730,6 @@ const StakeholderEdit = props => {
                   </BigTooltip>
                 </Grid>
                 <Grid item xs={12}>
-                  <BigTooltip title={noteTooltip}>
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
-                      fullWidth
-                      name="notes"
-                      label="Notes"
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      type="text"
-                      multiline
-                      rows={2}
-                      rowsMax={12}
-                      value={values.notes}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      helperText={touched.notes ? errors.notes : ""}
-                      error={touched.notes && Boolean(errors.notes)}
-                    />
-                  </BigTooltip>
-                </Grid>
-                <Grid item xs={12}>
                   <BigTooltip title="(In addition, must go to chapel service, must be < 18, must show citizenship, etc.)">
                     <TextField
                       variant="outlined"
@@ -783,13 +754,37 @@ const StakeholderEdit = props => {
                   </BigTooltip>
                 </Grid>
                 <Grid item xs={12}>
+                  <BigTooltip title={noteTooltip}>
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      name="notes"
+                      label="Public Notes"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      type="text"
+                      multiline
+                      rows={2}
+                      rowsMax={12}
+                      value={values.notes}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={touched.notes ? errors.notes : ""}
+                      error={touched.notes && Boolean(errors.notes)}
+                    />
+                  </BigTooltip>
+                </Grid>
+
+                <Grid item xs={12}>
                   <BigTooltip title="Leave blank">
                     <TextField
                       variant="outlined"
                       margin="normal"
                       fullWidth
                       name="adminNotes"
-                      label="Administrator Notes"
+                      label="Internal Notes"
                       type="text"
                       multiline
                       rows={2}
@@ -808,23 +803,23 @@ const StakeholderEdit = props => {
                   xs={12}
                   style={{ display: "flex", justifyContent: "flex-end" }}
                 >
-                  {/* <VerifyButton
+                  <VerifyButton
                     type="button"
                     onClick={() => {
                       const setVerified = !!!values.verifiedDate;
                       verify(setVerified);
                       setFieldValue(
                         "verifiedDate",
-                        setVerified ? moment().format() : "",
+                        setVerified ? moment().format() : ""
                       );
                       setFieldValue(
                         "verifiedUser",
-                        setVerified ? user.firstName + " " + user.lastName : "",
+                        setVerified ? user.firstName + " " + user.lastName : ""
                       );
                     }}
                     disabled={!values.id}
                     label={values.verifiedDate ? "Unverify" : "Verify"}
-                  /> */}
+                  />
                   <div>
                     {/* <CloseButton type="button" onClick={cancel} /> */}
                     <SaveButton
@@ -840,7 +835,7 @@ const StakeholderEdit = props => {
                     style={{
                       border: "1px solid gray",
                       borderRadius: "4px",
-                      padding: "0.5em"
+                      padding: "0.5em",
                     }}
                   >
                     <div>Id: {values.id} </div>
