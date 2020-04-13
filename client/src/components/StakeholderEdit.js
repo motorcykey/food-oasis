@@ -186,20 +186,28 @@ const StakeholderEdit = (props) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={`FOLA liason name, number, and email: (someone from your org who responds to requests for future updates)`}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemText
             primary={`Perishable or nonperishable food (or both)`}
           />
         </ListItem>
         <ListItem>
           <ListItemText primary={`Prepared food (Y/N)`} />
         </ListItem>
+      </List>
+    </div>
+  );
+
+  const adminNoteTooltip = (
+    <div>
+      <Typography>{`IF YOU GET THROUGH TO THEM:`}</Typography>
+      <List dense={true}>
         <ListItem>
           <ListItemText
-            primary={`Distribute food to the public or to other food pantries`}
+            primary={`FOLA liason name, number, and email: (someone from your org who responds to requests for future updates)`}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemText
+            primary={`Distribute food to the public or to other food pantries?`}
           />
         </ListItem>
       </List>
@@ -778,7 +786,7 @@ const StakeholderEdit = (props) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <BigTooltip title="Leave blank">
+                  <BigTooltip title={adminNoteTooltip}>
                     <TextField
                       variant="outlined"
                       margin="normal"
