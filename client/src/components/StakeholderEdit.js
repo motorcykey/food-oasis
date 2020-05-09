@@ -198,11 +198,10 @@ const StakeholderEdit = (props) => {
 
   const adminNoteTooltip = (
     <div>
-      <Typography>{`IF YOU GET THROUGH TO THEM:`}</Typography>
       <List dense={true}>
         <ListItem>
           <ListItemText
-            primary={`FOLA liason name, number, and email: (someone from your org who responds to requests for future updates)`}
+            primary={`FOLA liason name, number, and email: (someone from organization who responds to requests for future updates)`}
           />
         </ListItem>
         <ListItem>
@@ -210,17 +209,8 @@ const StakeholderEdit = (props) => {
             primary={`Distribute food to the public or to other food pantries?`}
           />
         </ListItem>
-      </List>
-      <Typography>{`IF YOU DON'T GET THROUGH TO THEM: (choose one)`}</Typography>
-      <List dense={true}>
         <ListItem>
-          <ListItemText primary={`1. The phone was inactive`} />
-        </ListItem>
-        <ListItem>
-          <ListItemText primary={`2. Weren't available but call back`} />
-        </ListItem>
-        <ListItem>
-          <ListItemText primary={`3. Put any info that was in a voicemail`} />
+          <ListItemText primary={`Donor contact (name, phone, email)`} />
         </ListItem>
       </List>
     </div>
